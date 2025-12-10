@@ -1,0 +1,58 @@
+// lib/appwrite.server.ts
+"use server";
+
+import {
+  Client,
+  Account,
+  Databases,
+  Users,
+  Messaging,
+  Storage,          // 👈 add this
+} from "node-appwrite";
+import { cookies } from "next/headers";
+
+export async function createSessionClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
+
+  const cookieStore = await cookies();
+  const session = cookieStore.get("appwrite-session");
+  if (!session?.value) throw new Error("No session");
+
+  client.setSession(session.value);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get database() {
+      return new Databases(client);
+    },
+  };
+}
+
+export async function createAdminClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+    .setKey(process.env.NEXT_APPWRITE_KEY!);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get database() {
+      return new Databases(client);
+    },
+    get users() {
+      return new Users(client);
+    },
+    get messaging() {
+      return new Messaging(client);
+    },
+    get storage() {              // 👈 used for profile photos
+      return new Storage(client);
+    },
+  };
+}
