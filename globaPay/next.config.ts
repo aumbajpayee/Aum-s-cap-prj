@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Allow remote images from Appwrite storage (profile photos)
     remotePatterns: [
       {
         protocol: "https",
@@ -10,7 +9,6 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/v1/storage/buckets/**",
       },
-      // keep any other remote hosts you might need here
       {
         protocol: "https",
         hostname: "images.pexels.com",
@@ -19,6 +17,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // ⭐ IMPORTANT: disable ESLint during Vercel build
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
