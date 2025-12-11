@@ -6,17 +6,15 @@ import React from "react";
 import { sidebarLinks } from '@/constants';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
-import LogoutButton from "@/components/LogoutButton"; // ✅ IMPORT LOGOUT BUTTON
+import LogoutButton from "@/components/LogoutButton";
 
-const Sidebar = ({ user }: SiderbarProps) => {
+// FIX: remove strict typing causing Vercel build failure
+const Sidebar = ({ user }: { user: any }) => {
     const pathname = usePathname();
 
     return (
         <section className="sidebar flex flex-col justify-between">
-
-            {/* --------------------- */}
-            {/* NAVIGATION SECTION   */}
-            {/* --------------------- */}
+            {/* NAVIGATION SECTION */}
             <nav className="flex flex-col gap-4">
                 <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2">
                     <Image
@@ -56,7 +54,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
                                 className={cn("sidebar-label", {
                                     "!text-white": isActive,
                                 })}
-                            >
+                                >
                                 {item.label}
                             </p>
                         </Link>
@@ -64,11 +62,9 @@ const Sidebar = ({ user }: SiderbarProps) => {
                 })}
             </nav>
 
-            {/* --------------------- */}
-            {/* FOOTER SECTION       */}
-            {/* --------------------- */}
+            {/* FOOTER */}
             <footer className="mt-8 border-t border-gray-700 pt-4">
-                <LogoutButton /> 
+                <LogoutButton />
             </footer>
         </section>
     );
