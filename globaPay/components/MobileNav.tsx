@@ -14,11 +14,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-const MobileNav = ({ user }: MobileNavProps) => {
+// FIX: remove strict typing (MobileNavProps was expecting a full User object)
+const MobileNav = ({ user }: { user: any }) => {
   const pathname = usePathname();
 
   return (
-    // ✅ Changed from w-full max-w-[264px] to w-fit for proper alignment
     <section className="w-fit">
       <Sheet>
         <SheetTrigger>
@@ -32,48 +32,55 @@ const MobileNav = ({ user }: MobileNavProps) => {
         </SheetTrigger>
 
         <SheetContent side="left" className="border-none bg-white p-0">
-          {/* Accessible title for screen readers */}
           <SheetHeader>
             <SheetTitle className="sr-only">Mobile Navigation</SheetTitle>
           </SheetHeader>
 
-          {/* Logo and App Name */}
+          {/* Logo */}
           <Link href="/" className="cursor-pointer flex items-center gap-1 px-4 pt-4">
-            <Image 
+            <Image
               src="/icons/logo.svg"
               width={34}
               height={34}
               alt="GlobaPay"
             />
-            <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">GlobaPay</h1>
+            <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
+              GlobaPay
+            </h1>
           </Link>
 
-          {/* Nav + Footer */}
+          {/* Navigation */}
           <div className="flex h-full flex-col justify-between px-4 pb-6">
             <nav className="flex flex-col gap-6 pt-10 text-white">
               {sidebarLinks.map((item) => {
-                const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`);
+                const isActive =
+                  pathname === item.route ||
+                  pathname.startsWith(`${item.route}/`);
 
                 return (
                   <SheetClose asChild key={item.route}>
                     <Link
                       href={item.route}
-                      className={cn('mobilenav-sheet_close w-full flex items-center gap-3', {
-                        'bg-bank-gradient': isActive
-                      })}
+                      className={cn(
+                        'mobilenav-sheet_close w-full flex items-center gap-3',
+                        { 'bg-bank-gradient': isActive }
+                      )}
                     >
-                      <Image 
+                      <Image
                         src={item.imgURL}
                         alt={item.label}
                         width={20}
                         height={20}
                         className={cn({
-                          'brightness-[3] invert-0': isActive
+                          'brightness-[3] invert-0': isActive,
                         })}
                       />
-                      <p className={cn("text-16 font-semibold text-black-2", {
-                        "text-white": isActive
-                      })}>
+                      <p
+                        className={cn(
+                          "text-16 font-semibold text-black-2",
+                          { "text-white": isActive }
+                        )}
+                      >
                         {item.label}
                       </p>
                     </Link>
