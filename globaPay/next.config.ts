@@ -18,16 +18,13 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ⭐ IMPORTANT: disable ESLint during Vercel build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
     },
   },
+
+  // ❌ REMOVE ESLINT HERE – NOT SUPPORTED IN NEXT 16
 };
 
 export default nextConfig;
