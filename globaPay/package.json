@@ -22,7 +22,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",
-    "next": "15.1.7",
+    "next": "^16.0.8",
     "node-appwrite": "^19.0.0",
     "openai": "^6.9.1",
     "plaid": "^38.1.0",
