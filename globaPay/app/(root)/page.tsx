@@ -1,4 +1,5 @@
 // app/(root)/page.tsx
+export const dynamic = "force-dynamic";
 import { headers, cookies } from "next/headers";
 import Link from "next/link";
 

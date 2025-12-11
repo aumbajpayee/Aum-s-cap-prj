@@ -1,4 +1,6 @@
 // app/(root)/profile/page.tsx
+export const dynamic = "force-dynamic";
+
 import ProfileForm from "@/components/ProfileForm";
 import { getCurrentUserDoc } from "@/lib/actions/user.actions";
 
