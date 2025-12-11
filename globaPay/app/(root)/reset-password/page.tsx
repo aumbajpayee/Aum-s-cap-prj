@@ -21,14 +21,19 @@ export default function ResetPasswordPage() {
     e.preventDefault();
     setError(null);
     setOk(null);
+
+    // Confirm validation stays the same
     if (password !== confirm) {
       setError("Passwords do not match");
       return;
     }
+
     setLoading(true);
 
     try {
-      await account.updateRecovery(userId, secret, password, confirm);
+      // FIX: Appwrite updateRecovery takes ONLY 3 arguments now
+      await account.updateRecovery(userId, secret, password);
+
       setOk("Password updated. Redirecting to sign in…");
       setTimeout(() => router.push("/sign-in"), 1200);
     } catch (err: any) {
